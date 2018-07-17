@@ -1,0 +1,36 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <div id="file-preview" style="border: 1px solid rgb(204, 204, 204); width: 100px; height: 100px; background-size: contain; background-repeat: no-repeat; background-position: center center;"></div>
+    <div id="file-info"></div>
+    <input type="file" id="file">
+    
+</head>
+<body>
+    <script type="text/javascript">
+        var fileInput = document.getElementById("file");
+        var fileInfo = document.getElementById("file-info");
+        var filePreview = document.getElementById("file-preview");
+
+        fileInput.addEventListener('change', function () {
+            filePreview.style.backgroundImage = '';
+            if (!fileInput.value) {
+                fileInfo.innerHTML = '没有选择文件';
+               return;
+            }
+            var file = fileInput.files[0];
+            fileInfo.innerHTML = '文件: ' + file.name + '<br>' + '大小: ' + file.size + '<br>' + '修改: ' + file.lastModifiedDate;
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var data = e.target.result;     
+                filePreview.style.backgroundImage = 'url(' + data + ')';
+            }; 
+            reader.readAsDataURL(file);
+        });
+    </script>
+</body>
+</html>
